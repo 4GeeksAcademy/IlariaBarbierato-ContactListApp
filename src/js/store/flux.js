@@ -12,7 +12,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "white",
 					initial: "white"
 				}
-			]
+			],
+			agenda : []
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -37,9 +38,44 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
+			},
+			addNewContact: (name, email, address, phone) => {
+				fetch("https://playground.4geeks.com/apis/fake/contact/", {
+					method: "POST",
+					headers: {
+						"Content-Type": 'application/json',
+					},
+					body: JSON.stringify({
+						"address": address,
+						"agenda_slug": "ilariaBa",
+						"email": email,
+						"full_name": name,
+						"phone": phone
+					})
+				})
+					.then(response => response.json())
+					.then(data => getActions().contactList())
+					.catch(err => err)
+			},
+			contactList: () => {
+				fetch("https://playground.4geeks.com/apis/fake/contact/agenda/ilariaBa")
+				.then(response => response.json())
+				.then((data) => {
+					const updatedAgenda = data.map((item) => ({
+						name: item.full_name,
+						address: item.address,
+						phone: item.phone,
+						email: item.email,
+					}));
+					setStore({agenda: updatedAgenda});
+				})
+				.catch(err => err)
 			}
+
 		}
 	};
 };
+
+
 
 export default getState;
