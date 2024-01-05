@@ -1,7 +1,11 @@
-import React from "react";
+import React, {useContext} from "react";
 import { Link } from "react-router-dom";
+import { Context } from "../store/appContext";
 
-export const ContactCard = ({ name, address, phone, email, index }) => {
+export const ContactCard = ({ name, address, phone, email, id, index }) => {
+
+    const {store, actions} = useContext(Context)
+
     return (
         <div className="card">
             <ul className="list-group list-group-flush">
@@ -17,8 +21,10 @@ export const ContactCard = ({ name, address, phone, email, index }) => {
                             <p className="m-1"><i className="fa-solid fa-envelope"></i> {email} </p>
                         </div>
                         <div className="col-md-2">
-                            <button className="btn"><i className="fa-solid fa-pencil"></i></button>
-                            <button className="btn"><i className="fa-solid fa-trash-can"></i></button>
+                            <Link to="/editContact">
+                                <button className="btn"><i className="fa-solid fa-pencil"></i></button>
+                            </Link>
+                            <button className="btn" onClick={() => actions.deleteContact(id)}><i className="fa-solid fa-trash-can"></i></button>
                         </div>
                     </div>
                 </li>

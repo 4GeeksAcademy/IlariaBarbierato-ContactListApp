@@ -13,7 +13,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					initial: "white"
 				}
 			],
-			agenda : []
+			agenda: []
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -47,7 +47,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					},
 					body: JSON.stringify({
 						"address": address,
-						"agenda_slug": "ilariaBa",
+						"agenda_slug": "IlariaBa",
 						"email": email,
 						"full_name": name,
 						"phone": phone
@@ -57,19 +57,31 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(data => getActions().contactList())
 					.catch(err => err)
 			},
-			contactList: () => {
-				fetch("https://playground.4geeks.com/apis/fake/contact/agenda/ilariaBa")
-				.then(response => response.json())
-				.then((data) => {
-					const updatedAgenda = data.map((item) => ({
-						name: item.full_name,
-						address: item.address,
-						phone: item.phone,
-						email: item.email,
-					}));
-					setStore({agenda: updatedAgenda});
+			deleteContact: (id) => {
+				fetch(`https://playground.4geeks.com/apis/fake/contact/${id}`, {
+					method: "DELETE",
+					headers: {
+						"Content-Type": 'application/json',
+					}
 				})
-				.catch(err => err)
+					.then(response => response.json())
+					.then(data => getActions().contactList())
+					.catch(err => err)
+			},
+			contactList: () => {
+				fetch("https://playground.4geeks.com/apis/fake/contact/agenda/IlariaBa")
+					.then(response => response.json())
+					.then((data) => {
+						const updatedAgenda = data.map((item) => ({
+							name: item.full_name,
+							address: item.address,
+							phone: item.phone,
+							email: item.email,
+							id: item.id,
+						}));
+						setStore({ agenda: updatedAgenda });
+					})
+					.catch(err => err)
 			}
 
 		}
