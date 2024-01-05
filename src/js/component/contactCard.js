@@ -1,6 +1,7 @@
 import React, {useContext} from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
+import { EditContact } from "../views/editContact";
 
 export const ContactCard = ({ name, address, phone, email, id, index }) => {
 
@@ -21,7 +22,7 @@ export const ContactCard = ({ name, address, phone, email, id, index }) => {
                             <p className="m-1"><i className="fa-solid fa-envelope"></i> {email} </p>
                         </div>
                         <div className="col-md-2">
-                            <Link to="/editContact">
+                            <Link to={"/editContact/" + id}>
                                 <button className="btn"><i className="fa-solid fa-pencil"></i></button>
                             </Link>
                             <button className="btn" onClick={() => actions.deleteContact(id)}><i className="fa-solid fa-trash-can"></i></button>

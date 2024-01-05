@@ -68,6 +68,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(data => getActions().contactList())
 					.catch(err => err)
 			},
+			editContact: (name, email, address, phone, id) => {
+				fetch(`https://playground.4geeks.com/apis/fake/contact/${id}`, {
+					method: "PUT",
+					headers: {
+						"Content-Type": 'application/json',
+					},
+					body: JSON.stringify({
+						"address": address,
+						"agenda_slug": "IlariaBa",
+						"email": email,
+						"full_name": name,
+						"phone": phone
+					})
+				})
+					.then(response => response.json())
+					.then(data => getActions().contactList())
+					.catch(err => err)
+			},
 			contactList: () => {
 				fetch("https://playground.4geeks.com/apis/fake/contact/agenda/IlariaBa")
 					.then(response => response.json())
@@ -79,6 +97,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 							email: item.email,
 							id: item.id,
 						}));
+						/*Sort the contact list in alphabetical order*/
+						updatedAgenda.sort((a, b) => a.name.localeCompare(b.name));
 						setStore({ agenda: updatedAgenda });
 					})
 					.catch(err => err)

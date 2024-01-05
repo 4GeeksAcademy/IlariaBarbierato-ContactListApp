@@ -15,12 +15,9 @@ export const Home = () => {
 					<button className="btn btn-success mb-3">Add new contact</button>
 				</Link>
 			</div>
-			{store.agenda.map((contact, index) => (
-				console.log(contact)
-			))}
 			{store.agenda.length === 0 ?
-				<div class="card">
-					<div class="card-body">
+				<div className="card">
+					<div className="card-body">
 						There are no contacts in this agenda.
 					</div>
 				</div>
